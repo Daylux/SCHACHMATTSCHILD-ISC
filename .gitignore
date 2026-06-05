@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+*.swp
+*.swo
+Thumbs.db
+
+# Temp
+.exort/
+test_bericht.json
+
+# Sensitive (Patent PDFs, Keys)
+*.pdf
+*.docx

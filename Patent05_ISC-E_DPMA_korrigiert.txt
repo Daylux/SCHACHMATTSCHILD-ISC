@@ -1,0 +1,142 @@
+An das
+Deutsche Patent- und Markenamt (DPMA)
+80297 München
+Deutschland
+
+Erfinder / Anmelder
+Dmitrij Medkov
+Auguststraße 12
+32130 Enger
+Deutschland
+E-Mail: medkov@web.de
+
+Titel der Erfindung
+Sicherheitsinfrastruktur zur deterministischen Validierung physischer und ereignisbasierter Umweltzustände mit mehrschichtiger Referenzarchitektur, Langzeittrendanalyse und automatischer Rekalibrierung (ISC-E)
+
+Technisches Gebiet
+Die Erfindung betrifft die sicherheitsrelevante Überwachung physischer, zeitlicher und kontextueller Ereignisse in technischen Systemen. Insbesondere betrifft sie eine KI- und netzunabhängige Sicherheitsarchitektur, welche reale Umwelt- und Ereigniskonstellationen prüft, bevor Aktionen physisch ausgeführt werden, und hierzu auf eine deterministische, mehrschichtige Referenzarchitektur zurückgreift. Ferner umfasst sie eine Langzeittrendanalyse mit automatischer Rekalibrierung der Primärsensorik.
+
+Stand der Technik
+Bekannte Systeme zur Überwachung physischer Umgebungen umfassen sensorbasierte Alarmsysteme, Schwellenwertüberwachungen und SCADA-Systeme. Diese Systeme weisen erhebliche Nachteile auf:
+1.. Rein reaktive Reaktion nach Eintritt eines Ereignisses, nicht proaktive Validierung vor Ausführung.
+2.. Fehlende zeitliche und kontextuelle Korrelation zwischen verschiedenen Ereignissen.
+3.. Keine Bewertung komplexer Ereignisfolgen oder kausaler Ketten.
+4.. Keine deterministische Vorab-Validierung von Umweltzuständen.
+5.. Fehlende revisionssichere Entscheidungslogik.
+6.. Abhängigkeit von externen, potenziell manipulierbaren Referenzdaten ohne eigene Validierung dieser Quellen.
+
+Abgrenzung zu bekannten Systemen
+Im Stand der Technik sind einzelne Elemente wie Sensornetzwerke oder externe Datenquellen bekannt. Die Kombination einer unabhängigen Sicherheitsinstanz mit einer mehrschichtigen Referenzarchitektur aus lokaler, physisch gesicherter Sensorik als Primärquelle und kryptografisch signierten externen Referenzen als Sekundärquelle, die zwingend miteinander abgeglichen werden, ist jedoch nicht bekannt. Insbesondere die deterministische Konsistenzprüfung zwischen Primär- und Sekundärquelle mit konfigurierbaren Toleranzschwellen, die Langzeittrendanalyse über ein gleitendes Zeitfenster von 30 Tagen mit gestaffelter Auflösung und die automatische Rekalibrierung bei Drift stellen eine neuartige Lösung dar, die für einen Fachmann nicht naheliegend ist.
+
+Aufgabe der Erfindung
+Aufgabe der Erfindung ist es, eine Sicherheitsinfrastruktur bereitzustellen, welche physische Ereignisse und Umweltzustände vor ihrer Wirkungsauslösung anhand zeitlicher, räumlicher und kontextueller Kriterien prüft, widersprüchliche oder unmögliche Konstellationen verhindert, eine deterministische mehrschichtige Referenzarchitektur bereitstellt, die eine Manipulation der Validierungsgrundlage technisch verhindert, sowie eine Langzeittrendanalyse mit automatischer Rekalibrierung durchführt.
+
+Lösung der Aufgabe
+Die Aufgabe wird durch die Merkmale des unabhängigen Patentanspruchs 1 gelöst. Vorteilhafte Weiterbildungen sind in den abhängigen Ansprüchen angegeben.
+ISC-E ist ein unabhängiger Sicherheitskern zur Validierung realer Umwelt- und Ereigniszustände anhand einer deterministischen, mehrschichtigen Referenzarchitektur. Kern der Erfindung ist die zwingende Konsistenzprüfung zwischen einer lokalen Primärquelle und einer kryptografisch signierten Sekundärquelle, kombiniert mit einer Langzeittrendanalyse und automatischer Rekalibrierung.
+
+Kurze Beschreibung der Figuren
+Figur 1 zeigt ein Blockschaltbild des ISC-E Systems mit Umweltsensorik, Ereignis-Input, ISC-E Core, Konsistenzlogik, Safety-Interrupt, Audit-Log und der mehrschichtigen Referenzarchitektur.
+Figur 2 zeigt ein Flussdiagramm des Validierungsverfahrens mit Ereigniserfassung, Kontextkorrelation, Zeitprüfung, Referenzabgleich, Trendanalyse und Freigabe oder Schutzmaßnahme.
+
+Detaillierte Beschreibung
+1. Systemarchitektur
+Das erfindungsgemäße System umfasst eine ISC-E Core (600) genannte Sicherheitsinstanz, die physisch und logisch von den überwachten Systemen getrennt ist. Der ISC-E Core wird auf eigenständiger Hardware mit separater Stromversorgung, separatem Arbeitsspeicher und eigenem Betriebssystemkern betrieben.
+In einer bevorzugten Ausführungsform kann die Trennung auch hardwaregestützt virtualisiert sein, sofern die Isolation des ISC-E Core von der überwachten Logik gewährleistet ist.
+Der ISC-E Core empfängt Daten von:
+·  einer Umweltsensorik (610) – lokale, physisch gesicherte Sensoren,
+·  einem Ereignis-Input (620) – Signale von überwachten Systemen.
+2. Deterministische Referenzarchitektur (Kern der Erfindung)
+Um eine Manipulation der Validierungsgrundlage zu verhindern, verfügt ISC-E über eine mehrschichtige, deterministische Referenzarchitektur (660):
+Schicht 1: Primärquelle – Lokale, physisch gesicherte Sensorik
+·  Eigene, unabhängige Sensorik zur Messung physischer Umgebungsparameter,
+·  physisch in der Umgebung des ISC-E Core installiert,
+·  direkt mit dem ISC-E Core verbunden, ohne Netzwerkanbindung,
+·  Daten werden unmittelbar in das Audit-Log (650) geschrieben.
+Schicht 2: Sekundärquelle – Kryptografisch signierte externe Referenzen
+·  Externe Referenzquellen anerkannter Instanzen,
+·  ausschließlich akzeptiert, wenn kryptografisch signiert mit einem im ISC-E Core hinterlegten öffentlichen Schlüssel eines Vertrauensankers,
+·  die Signatur wird vor jeder Nutzung geprüft,
+·  fehlende oder ungültige Signatur führt zur Verwerfung der externen Referenz.
+Schicht 3: Konsistenzprüfung zwischen Primär- und Sekundärquelle
+·  Die Daten aus Primär- und Sekundärquelle werden zwingend miteinander abgeglichen,
+·  ein Wert gilt nur dann als validiert, wenn beide Quellen innerhalb einer vordefinierten, konfigurierbaren Toleranzschwelle übereinstimmen,
+·  bei Abweichung außerhalb der Toleranz: Auslösung des Sicherheitszustands.
+Schicht 4: Audit-Referenzkette (optionale Ausführungsform)
+In einer erweiterten Ausführungsform werden die validierten Referenzdaten in eine kryptografisch verkettete Referenzkette geschrieben, die als manipulationssicherer Nachweis der zu einem bestimmten Zeitpunkt gültigen Umweltdaten für forensische Untersuchungen dient.
+3. Validierungslogik
+Der ISC-E Core (600) prüft eingehende Ereignisse und Umweltdaten anhand folgender Kriterien:
+·  Zeitliche Plausibilität: Ereignisse müssen in einer physikalisch möglichen zeitlichen Abfolge auftreten.
+·  Gleichzeitigkeit: Zwei Ereignisse, die physisch nicht gleichzeitig stattfinden können, werden erkannt und blockiert.
+·  Kontextuelle Unvereinbarkeit: Ereignisse werden auf ihren Kontext geprüft – physikalisch unmögliche Konstellationen werden erkannt.
+·  Referenzabgleich: Alle Umweltdaten werden gegen die deterministische Referenzarchitektur (660) validiert.
+4. Langzeittrendanalyse und automatische Rekalibrierung (Kern der Erfindung)
+ISC-E speichert alle Messwerte in einem gleitenden Zeitfenster mit gestaffelter Auflösung:
+·  24 Stunden – Auflösung: 1 Sekunde – Nutzung: Kurzfristige Drift-Erkennung
+·  7 Tage – Auflösung: 1 Minute – Nutzung: Mittelfristige Trendanalyse
+·  30 Tage – Auflösung: 1 Stunde – Nutzung: Langsame Drift-Erkennung
+Das System führt eine lineare Regression über die gespeicherten Daten durch. Der Drift-Schwellwert, bei dessen Überschreitung ein Alarm ausgelöst und eine automatische Rekalibrierung gestartet wird, ist konfigurierbar. Die Rekalibrierung nutzt die kryptografisch signierten externen Referenzen als Grundlage und passt die internen Kalibrierungsfaktoren an. Die Änderung wird im Audit-Log protokolliert.
+5. Schutzmaßnahmen
+Bei Feststellung einer Inkonsistenz oder bei fehlgeschlagenem Referenzabgleich werden deterministisch folgende Maßnahmen ausgelöst:
+·  Blockierung der auslösenden Aktion,
+·  Isolation betroffener Systeme,
+·  deterministische Notabschaltung über Safety-Interrupt (640),
+·  Protokollierung im Audit-Log (650) mit Angabe der abweichenden Referenzdaten.
+6. Revisionssicheres Audit-Log (650)
+Alle Validierungsentscheidungen, Referenzabgleiche und Schutzmaßnahmen werden in einem kryptografisch verketteten Audit-Log protokolliert. Jeder Eintrag enthält Zeitstempel, Art des Ereignisses, Validierungsergebnis und bei Referenzabgleich die Werte aus Primär- und Sekundärquelle sowie die Toleranzabweichung.
+
+Patentansprüche
+1. Sicherheitsinfrastruktur zur Validierung physischer Umwelt- und Ereigniszustände mit einer unabhängigen Sicherheitsinstanz (600), gekennzeichnet durch eine deterministische Referenzarchitektur (660), umfassend:
+·  eine Primärquelle in Form einer lokalen, physisch gesicherten Sensorik, die ohne Netzwerkanbindung direkt mit der Sicherheitsinstanz (600) verbunden ist,
+·  eine Sekundärquelle in Form mindestens einer externen Referenz, die ausschließlich dann akzeptiert wird, wenn sie mit einem in der Sicherheitsinstanz (600) hinterlegten öffentlichen Schlüssel eines Vertrauensankers kryptografisch signiert ist,
+·  eine Konsistenzprüfung, die konfiguriert ist, die Werte aus Primär- und Sekundärquelle zwingend miteinander abzugleichen und nur bei Übereinstimmung innerhalb einer vordefinierten, konfigurierbaren Toleranzschwelle als validiert zu akzeptieren.
+2. Infrastruktur nach Anspruch 1, dadurch gekennzeichnet, dass die Sicherheitsinstanz (600) ferner ausgebildet ist, zeitliche Ereignisfolgen zu prüfen und physikalisch unmögliche oder widersprüchliche Konstellationen zu erkennen und zu blockieren.
+3. Infrastruktur nach Anspruch 1 oder 2, dadurch gekennzeichnet, dass die Sicherheitsinstanz (600) ferner ausgebildet ist, kontextuelle Unvereinbarkeiten zu erkennen, bei denen ein Ereignis in seinem Kontext physikalisch nicht möglich ist.
+4. Infrastruktur nach einem der vorhergehenden Ansprüche, dadurch gekennzeichnet, dass die Sicherheitsinstanz (600) keine KI-Logik enthält und ausschließlich deterministisch auf Basis fest konfigurierter Regeln und Schwellwerte arbeitet.
+5. Infrastruktur nach einem der vorhergehenden Ansprüche, dadurch gekennzeichnet, dass die Sicherheitsinstanz (600) ausgebildet ist, Aktionen vor ihrer physischen Ausführung zu validieren und ausschließlich bei positivem Validierungsergebnis freizugeben.
+6. Infrastruktur nach einem der vorhergehenden Ansprüche, dadurch gekennzeichnet, dass bei festgestellter Inkonsistenz oder bei fehlgeschlagenem Referenzabgleich deterministisch mindestens eine der folgenden Schutzmaßnahmen ausgelöst wird: Blockierung der auslösenden Aktion, Isolation betroffener Systeme oder Notabschaltung über den Safety-Interrupt (640).
+7. Infrastruktur nach Anspruch 6, dadurch gekennzeichnet, dass die Schutzmaßnahme deterministisch und ohne Beteiligung von KI-Logik erfolgt und vollständig im Audit-Log (650) protokolliert wird.
+8. Infrastruktur nach einem der vorhergehenden Ansprüche, dadurch gekennzeichnet, dass sie ein revisionssicheres Audit-Log (650) umfasst, das alle Validierungsentscheidungen und Referenzabgleiche in einer kryptografisch verketteten Datenstruktur protokolliert, wobei jeder Eintrag bei Referenzabgleichen die Werte aus Primär- und Sekundärquelle sowie die Toleranzabweichung enthält.
+9. Infrastruktur nach einem der vorhergehenden Ansprüche, dadurch gekennzeichnet, dass die kryptografisch signierte externe Referenz ausschließlich mit einem in der Sicherheitsinstanz (600) unveränderlich hinterlegten öffentlichen Schlüssel eines vorab definierten Vertrauensankers geprüft wird, und bei fehlender oder ungültiger Signatur vollständig verworfen wird.
+10. Infrastruktur nach einem der vorhergehenden Ansprüche, dadurch gekennzeichnet, dass die validierten Referenzdaten in eine kryptografisch verkettete Referenzkette geschrieben werden, die als manipulationssicherer Nachweis der zu einem bestimmten Zeitpunkt gültigen Umweltdaten für forensische Untersuchungen dient.
+11. Infrastruktur nach einem der vorhergehenden Ansprüche, dadurch gekennzeichnet, dass die Sicherheitsinstanz (600) ausgebildet ist, eine Langzeittrendanalyse der Sensorwerte über ein gleitendes Zeitfenster von 30 Tagen mit gestaffelter Auflösung durchzuführen, wobei bei Überschreitung eines konfigurierbaren Drift-Schwellwerts ein Alarm ausgelöst und eine automatische Rekalibrierung anhand kryptografisch signierter externer Referenzen gestartet wird.
+12. Verfahren zur ereignisbasierten Umweltvalidierung unter Verwendung einer Infrastruktur nach einem der Ansprüche 1 bis 11, umfassend die Schritte:
+·  Erfassen von Umweltdaten durch die lokale Primärquelle,
+·  Prüfen der kryptografischen Signatur der Sekundärquelle,
+·  Konsistenzprüfung zwischen Primär- und Sekundärquelle innerhalb der konfigurierbaren Toleranzschwelle,
+·  Prüfen auf zeitliche Plausibilität, Gleichzeitigkeit und kontextuelle Unvereinbarkeit,
+·  Durchführen der Langzeittrendanalyse und bei Überschreitung des Schwellwerts: automatische Rekalibrierung,
+·  bei positivem Ergebnis: Freigabe der Aktion,
+·  bei negativem Ergebnis: deterministisches Auslösen der Schutzmaßnahme und Protokollierung im Audit-Log.
+13. Computerprogrammprodukt zur Durchführung des Verfahrens nach Anspruch 12, wobei das Programm, wenn es auf einem Prozessor der Sicherheitsinstanz (600) ausgeführt wird, bewirkt, dass die Sicherheitsinstanz die Schritte des Verfahrens durchführt, und wobei das Computerprogrammprodukt einen technischen Charakter aufweist, indem es unmittelbar auf die Primärsensorik, den Safety-Interrupt (640) und das Audit-Log (650) einwirkt.
+
+Beschreibung der Figuren
+Figur 1:
+Blockschaltbild des ISC-E Systems mit:
+·  Umweltsensorik (610) – lokale, physisch gesicherte Sensoren,
+·  Ereignis-Input (620),
+·  ISC-E Core (600),
+·  Konsistenzlogik (630),
+·  Safety-Interrupt (640),
+·  Audit-Log (650) – kryptografisch verkettet,
+·  Deterministische Referenzarchitektur (660) mit Primärquelle, Sekundärquelle, Konsistenzprüfung und optionaler Referenzkette.
+Figur 2:
+Flussdiagramm des Verfahrens mit:
+·  Ereigniserfassung durch Primärquelle,
+·  Signaturprüfung der Sekundärquelle,
+·  Konsistenzprüfung Primär vs. Sekundär – Toleranzschwelle konfigurierbar,
+·  Zeitliche Plausibilitätsprüfung,
+·  Kontextuelle Unvereinbarkeitsprüfung,
+·  Langzeittrendanalyse – 30 Tage, gestaffelte Auflösung,
+·  Bei Drift: automatische Rekalibrierung,
+·  Bei Konsistenz: Freigabe der Aktion,
+·  Bei Inkonsistenz: Schutzmaßnahme und Audit-Log.
+
+München, den _______________
+Für die Anmeldung:
+___________________________
+Dmitrij Medkov
+Auguststraße 12
+32130 Enger
++49 160 2089888
+medkov@web.de
