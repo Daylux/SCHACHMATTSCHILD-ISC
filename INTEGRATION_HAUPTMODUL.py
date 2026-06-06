@@ -1,3 +1,4 @@
+# Daylux Labs - ISC_AI - Proprietary and Confidential
 # INTEGRATION_HAUPTMODUL.py
 """
 HAUPTMODUL FÜR SYSTEMINTEGRATION - SCHACHMATTSCHILD

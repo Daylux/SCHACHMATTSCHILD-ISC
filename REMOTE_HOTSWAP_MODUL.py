@@ -1,3 +1,4 @@
+# Daylux Labs - ISC_AI - Proprietary and Confidential
 # REMOTE_HOTSWAP_MODUL.py
 """
 REMOTE HOT-SWAP ÜBER FUNKVERBINDUNG

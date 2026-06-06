@@ -1,3 +1,4 @@
+# Daylux Labs - ISC_AI - Proprietary and Confidential
 # MODULARE_ORAKEL_ARCHITEKTUR.py
 """
 MODULARE ORAKEL-DROHNEN ARCHITEKTUR

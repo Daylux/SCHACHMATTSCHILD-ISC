@@ -1,3 +1,4 @@
+# Daylux Labs - ISC_AI - Proprietary and Confidential
 # SCHWARMINTELLIGENZ_MODUL.py
 """
 SCHWARMINTELLIGENZ FÜR DROHNEN-KOORDINATION

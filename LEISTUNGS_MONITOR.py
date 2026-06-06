@@ -1,3 +1,4 @@
+# Daylux Labs - ISC_AI - Proprietary and Confidential
 # LEISTUNGS_MONITOR.py
 """
 ECHIZEIT-LEISTUNGSMONITOR FÜR SCHACHMATTSCHILD SYSTEM

@@ -1,3 +1,4 @@
+# Daylux Labs - ISC_AI - Proprietary and Confidential
 # ZIELERKENNUNG_YOLO_MODUL.py
 """
 YOLO-ZIELERKENNUNG FÜR FPV-DROHNEN UND 'BABA YAGA'

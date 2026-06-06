@@ -1,47 +1,72 @@
-================================================================
-SCHACHMATTSCHILD – ISC Sicherheitsplattform
-Korrigierter Code – Version 1.1
-================================================================
+╔══════════════════════════════════════════════════════════════╗
+║                    ISC_AI · DAYLUX LABS                      ║
+║  Intelligent Swarm Control – Artificial Intelligence         ║
+║  ⚔️  SCHACHMATTSCHILD – Integrated Security Core             ║
+║  Proprietary · Patents Pending                               ║
+║  © 2024-2026 Daylux Labs. All rights reserved.               ║
+╚══════════════════════════════════════════════════════════════╝
 
-DURCHGEFÜHRTE KORREKTUREN:
----------------------------
-1. HYBRID_KOMMUNIKATION_MODUL.py
-   - Zeile ~195: str(nachricht.timestamp) korrigiert
-   - Vorher: json.dumps(...) + nachricht.timestamp
-   - Nachher: json.dumps(...) + str(nachricht.timestamp)
+─────────────────────────────────────────────────────────────────
+                        ÜBERSICHT
+─────────────────────────────────────────────────────────────────
 
-2. SYSTEM_TEST_SUITE.py
-   - Überzählige schließende Klammer entfernt
-   - Vorher: print("=" * 80))
-   - Nachher: print("=" * 80)
+SCHACHMATTSCHILD ist das zentrale Sicherheits- und Steuerungs-
+system der ISC_AI-Plattform (Intelligent Swarm Control).
+Es vereint 14 Module zu einem ganzheitlichen Schutzschild für
+autonome Drohnenschwärme, KI-Entscheidungen und kritische
+Infrastruktur.
 
-3. HARDWARE_ABSTRACTION_LAYER (in mehreren Modulen)
-   - Doppelte Klassendefinitionen bereinigt
-   - Nur erste Definition behalten
+─────────────────────────────────────────────────────────────────
+                      KERN-MODULE (14)
+─────────────────────────────────────────────────────────────────
 
-================================================================
-MODULE (13 Stück):
----------------------------
-01. PROJEKT_SCHACHMATTSCHILD_SIMULATOR.py  - Hauptmodul
-02. SCHWARMINTELLIGENZ_MODUL.py            - Boids-Algorithmus
-03. ZIELERKENNUNG_YOLO_MODUL.py            - YOLO-Integration
-04. HYBRID_KOMMUNIKATION_MODUL.py          - Kommunikation
-05. MODULARE_ORAKEL_ARCHITEKTUR.py         - Drohnenarchitektur
-06. DYNAMISCHE_MODUL_KONFIGURATION.py      - Konfiguration
-07. PREDICTIVE_MAINTENANCE_MODUL.py        - Wartung
-08. REMOTE_HOTSWAP_MODUL.py               - Hot-Swap
-09. INTEGRATION_HAUPTMODUL.py             - Integration
-10. SYSTEM_TEST_SUITE.py                  - Tests
-11. LEISTUNGS_MONITOR.py                  - Monitoring
-12. KONFIGURATIONS_MANAGER.py             - Management
-13. AKUSTIK_BEACON_SYSTEM.py              - Akustik (ISC-A)
+  🧠  INTEGRATION_HAUPTMODUL        – System-Manager
+  🛡️  ISC_E_SICHERHEITSKERN         – Crypto-Audit, Primärquelle
+  🎭  ISC_CHAMAELEON                 – Tarnung & Frequenzsprung
+  💉  ISC_IMMUN                      – Myzel-Immunsystem
+  🌿  ISC_ECO                         – Bellard-Qualitäts-Score
+  🔩  HARDWARE_ABSTRACTION_LAYER      – GPIO, PWM, Sensoren
+  🔊  AKUSTIK_BEACON_SYSTEM           – 18-22 kHz Ultraschall
+  🐝  SCHWARMINTELLIGENZ_MODUL        – Schwarm-Verhalten
+  🎯  ZIELERKENNUNG_YOLO_MODUL        – YOLO-Objekt-Erkennung
+  📡  HYBRID_KOMMUNIKATION_MODUL      – Funk/Glasfaser/Notfall
+  🔮  MODULARE_ORAKEL_ARCHITEKTUR     – Entscheidungs-Engine
+  ⚙️  DYNAMISCHE_MODUL_KONFIGURATION  – Live-Konfiguration
+  🔧  PREDICTIVE_MAINTENANCE_MODUL    – Ausfall-Vorhersage
+  🚀  REMOTE_HOTSWAP_MODUL            – Live-Deployment
 
-================================================================
-INSTALLATION:
----------------------------
-pip install numpy opencv-python ultralytics torch
+─────────────────────────────────────────────────────────────────
+                        TESTS
+─────────────────────────────────────────────────────────────────
 
-================================================================
-ERFINDER: Dmitrij Medkov
-E-Mail: medkov@web.de
-================================================================
+  49/49 Tests bestanden (pytest)
+  ISC_A_Bridge: 124/124 Tests
+
+─────────────────────────────────────────────────────────────────
+                     PRODUKTE (DAYLUX LABS)
+─────────────────────────────────────────────────────────────────
+
+  ⚡ refactorix.io    – KI-Code-Refactoring (ISCEco-basiert)
+  🔍 signalix.ai      – KI-Patent-Recherche (in Entwicklung)
+  ☁️ petridish.cloud  – KI-Deployment (in Entwicklung)
+
+─────────────────────────────────────────────────────────────────
+                      PATENTE
+─────────────────────────────────────────────────────────────────
+
+  📜 Patent 05 – ISC-E Sicherheitskern (Crypto-Audit-Log)
+  📜 QZO Patent – Quanten-Zufalls-Orakel (in Prüfung)
+
+─────────────────────────────────────────────────────────────────
+                    TECHNOLOGIE-STACK
+─────────────────────────────────────────────────────────────────
+
+  Python 3.14+  |  NumPy  |  pytest  |  Flask  |  arduino-cli
+  Optional: scikit-learn, torch, opencv, anthropic (Claude)
+
+─────────────────────────────────────────────────────────────────
+                     KONTAKT
+─────────────────────────────────────────────────────────────────
+
+  Daylux Labs – Proprietary Technology
+  https://github.com/Daylux/SCHACHMATTSCHILD-ISC

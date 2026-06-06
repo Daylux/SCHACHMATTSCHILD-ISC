@@ -1,3 +1,4 @@
+# Daylux Labs - ISC_AI - Proprietary and Confidential
 # AKUSTIK_BEACON_SYSTEM.py
 """
 AKUSTIK-BEACON-SYSTEM FÜR FREUND/FEIND-ERKENNUNG

@@ -1,3 +1,4 @@
+# Daylux Labs - ISC_AI - Proprietary and Confidential
 """
 HARDWARE_ABSTRACTION_LAYER.py
 SCHACHMATTSCHILD – ISC Sicherheitsplattform

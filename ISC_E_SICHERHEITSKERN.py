@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Daylux Labs - ISC_AI - Proprietary and Confidential
 # -*- coding: utf-8 -*-
 """
 ISC-E Sicherheitskern (Patent 05)

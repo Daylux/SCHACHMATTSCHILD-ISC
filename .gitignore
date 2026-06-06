@@ -22,3 +22,5 @@ test_bericht.json
 # Sensitive (Patent PDFs, Keys)
 *.pdf
 *.docx
+
+schachmattschild_system.log
