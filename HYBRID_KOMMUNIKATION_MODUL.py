@@ -121,6 +121,8 @@ class HybrideKommunikation:
     
     def _waehle_uebertragungs_art(self, ziel_id: str) -> UebertragungsArt:
         """Wählt optimale Übertragungsart basierend auf Störungszustand"""
+        
+        # Explizite Störungszustände haben Vorrang
         if self.stoerungs_zustaende["jammer_erkannt"]:
             return UebertragungsArt.GLASFASER
         elif self.stoerungs_zustaende["glasfaser_beschaedigt"]:
@@ -128,7 +130,17 @@ class HybrideKommunikation:
         elif self.stoerungs_zustaende["signal_unterbrochen"]:
             return UebertragungsArt.NOTFALL
         
-        # Automatische Auswahl basierend auf Metriken
+        # SPD-Transition-Zone: Bei Unsicherheit → konservativster Wert (Patent 09)
+        # ---------------------------------------------------------------------
+        # Das "konservativster Wert gewinnt"-Prinzip besagt:
+        # Wenn Metriken uneindeutig sind oder in einer Übergangszone liegen,
+        # wird der SICHERSTE (reliabelste) Übertragungsweg gewählt.
+        # Rangfolge (sicher → riskant): GLASFASER > FUNK > NOTFALL
+        spd_ergebnis = self._spd_transition_zone_check(ziel_id)
+        if spd_ergebnis is not None:
+            return spd_ergebnis
+        
+        # Automatische Auswahl basierend auf Metriken (nur bei klaren Werten)
         metrik = self.metriken.get(ziel_id)
         if metrik and metrik.paketverlust > 0.5:  # Hoher Paketverlust
             return UebertragungsArt.GLASFASER
@@ -137,6 +149,50 @@ class HybrideKommunikation:
         else:
             # Standard: Funk für Mobilität, Glasfaser für Stabilität
             return UebertragungsArt.FUNK if "MOBIL" in ziel_id else UebertragungsArt.GLASFASER
+    
+    def _spd_transition_zone_check(self, ziel_id: str) -> Optional[UebertragungsArt]:
+        """
+        SPD-Transition-Zone Prüfung (Patent 09 – "konservativster Wert gewinnt")
+        
+        Erkennt Übergangszonen, in denen keine eindeutige Entscheidung möglich ist:
+        - Metriken widersprüchlich (z.B. hoher Paketverlust + gute Signalstärke)
+        - Metriken veraltet (kein Update > 30s)
+        - Keine Metriken vorhanden
+        - Mehrere Störungszustände gleichzeitig aktiv
+        
+        In allen diesen Fällen: KONSERVATIVSTER WERT = GLASFASER (höchste Reliabilität)
+        """
+        metrik = self.metriken.get(ziel_id)
+        
+        # Fall 1: Keine Metriken vorhanden → unsicher, konservativ wählen
+        if metrik is None:
+            print(f"🟡 SPD-Transition: Keine Metriken für {ziel_id} – konservativ: GLASFASER")
+            return UebertragungsArt.GLASFASER
+        
+        # Fall 2: Metriken veraltet (> 30s kein Update) → Übergangszone
+        if time.time() - metrik.last_update > 30:
+            print(f"🟡 SPD-Transition: Metriken veraltet für {ziel_id} – konservativ: GLASFASER")
+            return UebertragungsArt.GLASFASER
+        
+        # Fall 3: Widersprüchliche Metriken (Transition-Zone)
+        #   Hoher Paketverlust (>30%) + gute Signalstärke (>0.7) = unsicher
+        paketverlust_hoch = metrik.paketverlust > 0.3
+        signal_stark = metrik.signalstaerke > 0.7
+        
+        if paketverlust_hoch and signal_stark:
+            print(f"🟡 SPD-Transition: Widersprüchliche Metriken für {ziel_id} "
+                  f"(PV={metrik.paketverlust:.2f}, SS={metrik.signalstaerke:.2f}) "
+                  f"– konservativ: GLASFASER")
+            return UebertragungsArt.GLASFASER
+        
+        # Fall 4: Mehrere Störungszustände gleichzeitig
+        aktive_stoerungen = sum(1 for v in self.stoerungs_zustaende.values() if v)
+        if aktive_stoerungen >= 2:
+            print(f"🟡 SPD-Transition: {aktive_stoerungen} Störungen aktiv – konservativ: GLASFASER")
+            return UebertragungsArt.GLASFASER
+        
+        # Keine Transition-Zone erkannt → normale Auswahl
+        return None
     
     def _sende_mit_wiederholung(self, nachricht: Nachricht) -> bool:
         """Sendet Nachricht mit Wiederholungslogik bei Fehlern"""
